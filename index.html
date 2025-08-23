@@ -1,122 +1,196 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cartão de Visita Digital</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Cartão Digital Fullscreen - Dudu Souza</title>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #000, #1a0a0a);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        overflow: hidden;
+    }
 
-        .card {
-            background-color: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-            padding: 30px;
-            text-align: center;
-        }
+    .card-container {
+        perspective: 1200px;
+        width: 95%; /* ocupa quase toda a largura */
+        height: 95%; /* ocupa quase toda a altura */
+    }
 
-        .profile-pic {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 20px;
-            border: 3px solid #007BFF;
-        }
+    .card {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 1s;
+        cursor: pointer;
+    }
 
-        h1 {
-            font-size: 2em;
-            color: #333;
-            margin: 0;
-        }
+    .card-front, .card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        padding: 15px;
+        box-sizing: border-box;
+        border-radius: 10px; /* arredondar levemente */
+        transition: box-shadow 0.3s, transform 1s;
+        overflow: hidden;
+    }
 
-        h2 {
-            font-size: 1.2em;
-            color: #666;
-            margin-top: 5px;
-            margin-bottom: 20px;
-        }
+    .card-front {
+        background: linear-gradient(145deg, #000, #001f4d);
+        border-left: 5px solid #00f;
+        border-right: 5px solid #00f;
+    }
 
-        .contact-info {
-            list-style: none;
-            padding: 0;
-            margin: 20px 0;
-            text-align: left;
-        }
+    .card-back {
+        background: linear-gradient(145deg, #000, #4d0000);
+        transform: rotateY(180deg);
+        border-left: 5px solid #f00;
+        border-right: 5px solid #f00;
+        font-size: 1.2em;
+        text-align: center;
+    }
 
-        .contact-info li {
-            font-size: 1em;
-            color: #555;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
+    .profile-img {
+        width: 220px; /* maior para tela cheia */
+        height: 220px;
+        border-radius: 50%;
+        border: 4px solid #f00;
+        object-fit: cover;
+        margin-bottom: 20px;
+        box-shadow: 0 0 25px #00f;
+    }
 
-        .contact-info .icon {
-            width: 20px;
-            margin-right: 10px;
-            color: #007BFF;
-        }
+    h1, h2 {
+        margin: 10px 0;
+        text-align: center;
+        font-size: 2.2em; /* aumentado */
+    }
 
-        .contact-info a {
-            color: #555;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
+    p, .services {
+        margin: 6px 0;
+        text-align: center;
+        font-size: 1.3em; /* aumentado */
+    }
 
-        .contact-info a:hover {
-            color: #007BFF;
-        }
+    a {
+        color: #00f;
+        text-decoration: none;
+        word-break: break-word;
+    }
 
-        .save-btn {
-            display: inline-block;
-            background-color: #28a745;
-            color: #ffffff;
-            padding: 12px 25px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1em;
-            margin-top: 20px;
-            transition: background-color 0.3s;
-        }
+    a:hover {
+        text-decoration: underline;
+    }
 
-        .save-btn:hover {
-            background-color: #218838;
-        }
-    </style>
+    button {
+        margin-top: 20px;
+        padding: 16px 28px;
+        background-color: #f00;
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s;
+        width: 75%;
+        max-width: 280px;
+        font-size: 1.3em; /* maior botão */
+    }
+
+    button:hover {
+        background-color: #aa0000;
+    }
+
+    .card:hover .card-front,
+    .card:hover .card-back {
+        box-shadow: 0 25px 60px rgba(255,0,0,0.7), 0 0 60px #00f inset;
+    }
+
+</style>
 </head>
 <body>
-    <div class="card">
-        <img src="https://res.cloudinary.com/ddozlstmp/image/upload/v1755895447/IMG-20240309-WA0008_nxwey5.jpg" alt="Foto de Perfil" class="profile-pic" id="profile-img">
-        <h1 id="name">Seu Nome Completo</h1>
-        <h2 id="profession">Sua Profissão ou Cargo</h2>
-        <ul class="contact-info">
-            <li>
-                <span class="icon">&#9993;</span> <a href="mailto:seu.email@exemplo.com" id="email">seu.email@exemplo.com</a>
-            </li>
-            <li>
-                <span class="icon">&#9742;</span> <a href="tel:+5511999999999" id="phone">+55 (11) 99999-9999</a>
-            </li>
-            <li>
-                <span class="icon">&#9992;</span> <a href="https://seusite.com.br" target="_blank" id="website">seusite.com.br</a>
-            </li>
-            <li>
-                <span class="icon">&#9992;</span> <a href="https://linkedin.com/in/seuperfil" target="_blank" id="linkedin">/in/seuperfil</a>
-            </li>
-        </ul>
-        <a href="vcard.vcf" class="save-btn" download>Salvar Contato</a>
+<div class="card-container">
+    <div class="card" id="card">
+        <!-- Frente -->
+        <div class="card-front">
+            <img src="https://res.cloudinary.com/ddozlstmp/image/upload/v1755895447/IMG-20240309-WA0008_nxwey5.jpg" alt="Dudu Souza" class="profile-img">
+            <h1>Dudu Souza</h1>
+            <h2>Fundador - CT SZABJJ</h2>
+            <p>📞 +55 21 98248-1691</p>
+            <p>✉️ d09u05d92u@gmail.com</p>
+            <p>📍 Antônio Felix, 425, Centro, Nilópolis, RJ</p>
+        </div>
+
+        <!-- Verso -->
+        <div class="card-back">
+            <h2>Serviços</h2>
+            <p class="services">
+                Criador de Sites<br>
+                Cartão de visita virtual<br>
+                Fotografia<br>
+                Personalizados
+            </p>
+            <p>
+                🌐 <a href="https://d09u05d92u-oss.github.io/szabjj/" target="_blank">Meu Site</a><br>
+                🎵 <a href="https://www.tiktok.com/@szadbjj?_t=ZM-8z4Msu2MQBs&_r=1" target="_blank">TikTok</a><br>
+                📸 <a href="https://www.instagram.com/dudusza?igsh=eDE1OXcwOWJrMmNv" target="_blank">Instagram</a>
+            </p>
+            <button onclick="downloadVCard()">Baixar vCard</button>
+        </div>
     </div>
+</div>
+
+<script>
+    const card = document.getElementById('card');
+    let flipped = false;
+
+    card.addEventListener('click', () => {
+        flipped = !flipped;
+        card.style.transform = flipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
+    });
+
+    function downloadVCard() {
+        const vCard = `
+BEGIN:VCARD
+VERSION:3.0
+FN:Dudu Souza jiu jitsu
+ORG:CT SZABJJ
+TITLE:Fundador
+TEL;CELL;PREF:+5521982481691
+EMAIL;PREF;HOME:d09u05d92u@gmail.com
+ADR;TYPE=HOME:;;Antônio Felix, 425, Centro, Nilópolis, RJ
+URL:https://d09u05d92u-oss.github.io/szabjj/
+URL:https://www.tiktok.com/@szadbjj?_t=ZM-8z4Msu2MQBs&_r=1
+URL:https://www.instagram.com/dudusza?igsh=eDE1OXcwOWJrMmNv
+NOTE:Criador de Sites, Cartão de visita virtual, Fotografia, Personalizados
+PHOTO;VALUE=URL:https://res.cloudinary.com/ddozlstmp/image/upload/v1755895447/IMG-20240309-WA0008_nxwey5.jpg
+END:VCARD
+        `.trim();
+
+        const blob = new Blob([vCard], { type: 'text/vcard' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'Dudu_Souza.vcf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+</script>
 </body>
 </html>
